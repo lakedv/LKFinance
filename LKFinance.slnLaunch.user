@@ -1,0 +1,23 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "LKFinance\\LKFinance.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "AuthService.API\\AuthService.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "BudgetService.API\\BudgetService.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ReportService.API\\ReportService.API.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
