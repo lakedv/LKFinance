@@ -1,1 +1,26 @@
+# Visual Studio
 .vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+appsettings.json
+appsettings.Development.json
+
+
+# Build output
+bin/
+obj/
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# Others
+*.log
+*.vsix

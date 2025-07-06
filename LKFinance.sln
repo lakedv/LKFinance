@@ -1,9 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36212.18 d17.14
+VisualStudioVersion = 17.14.36212.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LKFinance", "LKFinance\LKFinance.csproj", "{9116B374-7174-4AF3-8DC0-855C13EDFA37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.API", "AuthService.API\AuthService.API.csproj", "{97685FE7-8841-47C7-863D-5E8F8578DE41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BudgetService.API", "BudgetService.API\BudgetService.API.csproj", "{07A23197-3576-4A6E-B72A-D193E662CF82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.API", "ReportService.API\ReportService.API.csproj", "{1B2BADC4-97C2-475B-95C4-72E31F4EF848}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +26,18 @@ Global
 		{9116B374-7174-4AF3-8DC0-855C13EDFA37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9116B374-7174-4AF3-8DC0-855C13EDFA37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9116B374-7174-4AF3-8DC0-855C13EDFA37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97685FE7-8841-47C7-863D-5E8F8578DE41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97685FE7-8841-47C7-863D-5E8F8578DE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97685FE7-8841-47C7-863D-5E8F8578DE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97685FE7-8841-47C7-863D-5E8F8578DE41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07A23197-3576-4A6E-B72A-D193E662CF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07A23197-3576-4A6E-B72A-D193E662CF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07A23197-3576-4A6E-B72A-D193E662CF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07A23197-3576-4A6E-B72A-D193E662CF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B2BADC4-97C2-475B-95C4-72E31F4EF848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B2BADC4-97C2-475B-95C4-72E31F4EF848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B2BADC4-97C2-475B-95C4-72E31F4EF848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B2BADC4-97C2-475B-95C4-72E31F4EF848}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
