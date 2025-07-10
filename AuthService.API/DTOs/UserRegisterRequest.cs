@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthService.API.Models.DTOs
+namespace AuthService.API.DTOs
 {
-    public class RegisterRequest
+    public class UserRegisterRequest
     {
         [Required]
         public string Name { get; set; } = string.Empty;

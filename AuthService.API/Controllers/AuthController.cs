@@ -1,4 +1,4 @@
-﻿using AuthService.API.Models.DTOs;
+﻿using AuthService.API.DTOs;
 using AuthService.API.Services;
 
 using Microsoft.AspNetCore.Mvc;
@@ -17,24 +17,24 @@ namespace AuthService.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var success = await _userService.RegisterAsync(request.Name,request.Email, request.Password);
+            var success = await _userService.RegisterUserAsync(request);
             if (!success)
                 return BadRequest("El correo ya existe o es invalido.");
             return Ok("Usuario registrado correctamente.");
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] UserLoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var token = await _userService.LoginAsync(request.Email, request.Password);
+            var token = await _userService.LoginUserAsync(request);
             if (token == null)
                 return Unauthorized("Correo o contraseña invalidos.");
 

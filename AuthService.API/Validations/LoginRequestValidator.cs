@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using AuthService.API.Models.DTOs;
-namespace AuthService.API.Models.Validations
+using AuthService.API.DTOs;
+namespace AuthService.API.Validations
 {
-    public class LoginRequestValidator : AbstractValidator<LoginRequest>
+    public class LoginRequestValidator : AbstractValidator<UserLoginRequest>
     {
         public LoginRequestValidator()
         {

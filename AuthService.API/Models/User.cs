@@ -1,11 +1,10 @@
-﻿namespace AuthService.API.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace AuthService.API.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

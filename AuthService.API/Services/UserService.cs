@@ -1,11 +1,12 @@
-﻿using AuthService.API.Exceptions;
+﻿using AuthService.API.DTOs;
+using AuthService.API.Exceptions;
 using AuthService.API.Models;
-using AuthService.API.Repositories.Interfaces;
 using AuthService.API.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,82 +15,52 @@ namespace AuthService.API.Services
 {
     public class UserService : IUserService
     {
+        private readonly IJwtService _jwtService;
         private readonly JwtOptions _jwtOptions;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        private readonly IUserRepository _userRepository;
-        private readonly PasswordHasher<User> _passwordHasher;
-
-        public UserService(IUserRepository userRepository, IOptions<JwtOptions> jwtOptions)
+        public UserService(UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            IJwtService jwtService,
+            IOptions<JwtOptions> jwtOptions)
         {
+            _jwtService = jwtService;
             _jwtOptions = jwtOptions.Value;
-            _userRepository = userRepository;
-            _passwordHasher = new PasswordHasher<User>();
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
-        private bool IsValidEmail(string email)
+        public async Task<bool> RegisterUserAsync(UserRegisterRequest request)
         {
-            try 
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return addr.Address == email;
-            }
-            catch 
-            {
-                return false;
-            }
-        }
-
-        public async Task<bool> RegisterAsync(string name, string email, string password)
-        {
-            if (!IsValidEmail(email))
-                return false;
-
-            if(await _userRepository.EmailExistsAsync(email))
-                return false;
-
+            var existingUser = await _userManager.FindByEmailAsync(request.Email);
+            if (existingUser != null)
+                throw new ConflictException("Ya existe un usuario registrado con ese email.");
             var user = new User
-            { Name = name, Email = email };
-            user.PasswordHash = _passwordHasher.HashPassword(user, password);
-            
-            await _userRepository.AddAsync(user);
+            {
+                UserName = request.Email,
+                Email = request.Email,
+                Name = request.Name
+            };
+
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (!result.Succeeded)
+                throw new ValidationException(string.Join(" | ", result.Errors.Select(e => e.Description)));
+
             return true;
         }
 
-        public async Task<string?> LoginAsync(string email, string password)
+        public async Task<string?> LoginUserAsync(UserLoginRequest request)
         {
-            var user = await _userRepository.GetByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(request.Email);
             if (user == null)
                 throw new NotFoundException("Usuario no encontrado.");
 
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password);
-            if (result == PasswordVerificationResult.Failed)
-                return null;
+            var result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+            if (!result.Succeeded)
+                throw new BadRequestException("Credenciales incorrectas.");
 
-            return GenerateJwtToken(user);
-        }
-
-        private string GenerateJwtToken(User user)
-        {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                new Claim("userId", user.Id.ToString()),
-                new Claim("name", user.Name),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-
-            var token = new JwtSecurityToken(
-                issuer: _jwtOptions.Issuer,
-                audience: _jwtOptions.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(3),
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return _jwtService.GenerateToken(user, _jwtOptions);
         }
     }
 }
