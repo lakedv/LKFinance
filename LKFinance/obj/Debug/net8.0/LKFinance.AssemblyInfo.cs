@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LKFinance")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73027192e17c6f36564477b48b294bbd5665d0d2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f40fcf7efc4c891f29fdb5f9deee0d53f1517fa3")]
 [assembly: System.Reflection.AssemblyProductAttribute("LKFinance")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LKFinance")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
